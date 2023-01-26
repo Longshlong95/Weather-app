@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  
+</head>
+<body>
+    <div class="card">
+  <h1>Weather App</h1>
+
+  <form>
+    <label for="location">Enter your location:</label>
+    <input type="text" id="location" name="location">
+    <button type="button" onclick="getWeather()">Get Weather</button>
+  </form>
+  <div id="weather"></div>
+</div>
+
+
+
+  <style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+form label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+form input {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+form button {
+  padding: 10px 20px;
+  background-color: #00b0ff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#weather {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+button {
+    margin-left: 10px;
+}
+
+.card {
+    background-color: #17df85;
+    padding: 2em;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 415px;
+    margin: 1em;
+}
+
+  </style>
+ 
+ 
+
+  <script>
+
+    function getWeather() {
+
+      var location = document.getElementById("location").value;
+
+      
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          
+          var response = JSON.parse(this.responseText);
+
+          
+          var temperature = response.main.temp;
+          var condition = response.weather[0].main;
+
+           temperature = Math.floor(temperature);
+
+         
+          document.getElementById("weather").innerHTML =
+            "The current temperature in " + location + " is " + temperature + " &#8451 and the weather is " + condition + ".";
+        }
+      };
+      xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&units=metric&appid=c6e8073beb49ecb83488b21ed4f71213", true);
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
